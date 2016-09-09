@@ -1,0 +1,167 @@
+<div class="panel panel-default">
+    <div class=panel-heading>
+        Blockchain <span class="badge select-header"><span class="lang si">Število slik</span><span class="lang en">Number of images</span>: <span id="st-slik"></span></span>
+    </div>
+    <div class="panel-body">
+        <div>
+        <div class="list-group col-md-6" id="image-list">
+        </div>
+        <div class="col-md-6" id="image-container">
+            <div id='bc-vr-info'>
+                <div id="bc-vr-faces">
+                    <span class="lang si">Starost</span><span class="lang en">Age</span>: <span id="bc-age-min"></span>-<span id="bc-age-max"></span> (<span id="bc-age-score"></span>)<br />
+                    <span class="lang si">Spol</span><span class="lang en">Gender</span>: <span id="bc-gender"></span> (<span id="bc-gender-score"></span>)<br />
+                </div>
+                <div id="bc-vr-user">
+                    <span class="lang si">Uporabnik</span><span class="lang en">User</span>: <span id="bc-user"></span> (<span id="bc-user-score"></span>)
+                </div>
+            </div>
+            <img class="img-responsive img-thumbnail" id="blockchain-image" src=""  data-action="zoom"/>
+        </div>
+        <div class="col-md-12 lang si">
+            <p>
+                V tem zavihku lahko vidite informacije iz servisa <b>Blockchain</b>. Iz servisa
+                so prikazane informacije o zadnjih 10 slikah (<i>ID</i> in <i>časovni odtis</i>)
+                ter število slik, ki so bile narejene do sedaj.
+            </p>
+            <p>
+                S klikom na datum slike se s strežnika s pomočjo ID-ja, prejetega z blockchain-a, naloži izbrana slika.
+            </p>
+        </div>
+        <div class="col-md-12 lang en">
+            <p>
+                In this tab, you can see the information recieved from the <b>Blockchain</b> service.
+                The service returns information about the last 10 pictures (<i>ID</i> and <i>timestamp</i>)
+                and the number of pictures, taken until now.
+            </p>
+            <p>
+                By clicking on the date of the picture, selected image from the server is displayed with
+                the help of ID, recieved from the blockchain.
+            </p>
+        </div>
+    </div>
+    </div>
+</div>
+<script>
+// Na začetku skrij sliko
+$("#image-container").hide();
+
+// GET zahteva, ki vrne podatke o zajetih slikah z blokchaina
+$.get("http://iotplatformiicljuljana.mybluemix.net/blockchain_images")
+    .done(function(data) {
+        $("#image-list").html("");
+        for(var i = data.length-1; i >= 0; i--) {
+            var date = new Date(data[i]['Timestamp'] * 1000);
+			var id = "image-item-" + data[i]['Image'];
+            $("#image-list").append("<a id='"+id+"' class='list-group-item' onclick='load_image(" + data[i]['Image'] + ")'><center>" + date + "</center></a>");
+        }
+    })
+    .fail(function(error) {
+        console.log(error);
+    });
+
+// GET zahteva, ki vrne število zajetih slik z blokchaina
+$.get("http://iotplatformiicljuljana.mybluemix.net/blockchain_count")
+    .done(function(data) {
+        $("#st-slik").text(data);
+    })
+    .fail(function(error) {
+        console.log(error);
+    });
+
+
+/**
+ * load_image - Naloži sliko z podanim id-jem.
+ * Sliko server vrne z baze in ne z blockchain-a.
+ *
+ * @param  {string} id ID slike
+ */
+ 
+
+function load_image(id) {
+    $("#image-container").fadeOut();
+    $("#blockchain-image").attr("src", "http://iotplatformiicljuljana.mybluemix.net/image?id=" + id);
+
+	$(".list-group-item").css("background-color", "");
+	$("#image-item-"+id).css("background-color", "#D3D3D3");
+	
+	//console.log("#"+id);
+	
+    $.get("http://iotplatformiicljuljana.mybluemix.net/vr_info?id=" + id)
+        .done(function(data) {
+            add_vr_info(data);
+        })
+        .fail(function(error) {
+            console.log(error);
+        });
+}
+
+/**
+ * add_vr_info - Naloženi sliki doda VR-info (če ta obstaja).
+ *
+ * @param  {JSON} data Podatki o sliki z baze (poda funkcija load_image)
+ */
+function add_vr_info(data) {
+    //console.log(data);
+
+    var classes_present = false;
+    var faces_present = false;
+
+    if(data['classes'] != null && data['classes'].length > 0) {
+        var max = data['classes'][0];
+        data['classes'].forEach(function(el) {
+            if(el['score'] > max['score']) {
+                max = el;
+            }
+        });
+        $("#bc-user").text(max['class']);
+        $("#bc-user-score").text(max['score']);
+
+        classes_present = true;
+    }
+
+    if(data['faces'] != null && data['faces'].length > 0) {
+        var face = data['faces'][0];
+        var min = "0";
+        var max = "99";
+        if(face['age']['min'] != null) {
+            min = face['age']['min'];
+        }
+        if(face['age']['max'] != null) {
+            max = face['age']['max'];
+        }
+        $("#bc-age-score").text(face['age']['score']);
+        $("#bc-age-min").text(min);
+        $("#bc-age-max").text(max);
+
+        $("#bc-gender-score").text(face['gender']['score']);
+        $("#bc-gender").text(face['gender']['gender']);
+
+        faces_present = true;
+    }
+
+    if(faces_present) {
+        $("#bc-vr-faces").show();
+    } else {
+        $("#bc-vr-faces").hide();
+    }
+
+    if(classes_present) {
+        $("#bc-vr-user").show();
+    } else {
+        $("#bc-vr-user").hide();
+    }
+
+    if(!faces_present && !classes_present) {
+        $("#bc-vr-info").hide();
+    } else {
+        $("#bc-vr-info").show();
+    }
+}
+
+// Ko je slika naložena, jo prikaži
+$("#blockchain-image").load(function() {
+    if($("#blockchain-image").attr("src") != "")
+        $("#image-container").fadeIn();
+});
+</script>

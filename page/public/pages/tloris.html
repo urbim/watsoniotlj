@@ -1,0 +1,400 @@
+<div class="panel panel-default">
+    <div class=panel-heading>
+        <span class="lang si">Tloris</span><span class="lang en">Ground plan</span>
+        <div class="select-header">
+            <span><span class="lang si">Izberi senzor</span><span class="lang en">Choose sensor</span>:</span>
+            <div class="dropdown" id="sensor-dropdown">
+                <button id="btn-dropdown" class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">
+                    <span class="lang si">Temperatura</span><span class="lang en">Temperature</span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a onclick="change_sensor('Temp', this)"><span class="lang si">Temperatura</span><span class="lang en">Temperature</span></a></li>
+                    <li><a onclick="change_sensor('Lum', this)"><span class="lang si">Svetlost</span><span class="lang en">Luminosity</span></a></li>
+                    <li><a onclick="change_sensor('RelHum', this)"><span class="lang si">Vlaga</span><span class="lang en">Humidity</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-8">
+        <div id="tloris" class="s-main" data-roomName="Zunanji senzor">
+            <div id="row1">
+                <div id="soba1" class="soba s-main" data-roomName="Soba 9" data-roomNameEn="Room 9"></div><div id="soba2" class="soba s-main" data-roomName="Soba 1a" data-roomNameEn="Room 1a"></div><div id="soba3" class="soba s-main" data-roomName="Soba 1b" data-roomNameEn="Room 1b"></div><div id="soba4" class="soba s-main" data-roomName="Soba 2" data-roomNameEn="Room 2"></div><div id="sobaX" class="soba"></div>
+            </div>
+            <div id="row2">
+                <div id="soba5" class="soba s-main" data-roomName="Soba 8" data-roomNameEn="Room 8"></div><div id="soba6" class="soba s-main" data-roomName="Innovation tabla" data-roomNameEn="Innovation table"></div><div id="soba7" class="soba" data-roomName="Innovation tabla" data-roomNameEn="Innovation table"></div><div id="soba8" class="soba" data-roomName="IoT tabla" data-roomNameEn="IoT table"></div><div id="soba9" class="soba s-main" data-roomName="IoT tabla" data-roomNameEn="IoT table"></div><div id="soba10" class="soba" data-roomName="IoT tabla" data-roomNameEn="IoT table"></div><div id="soba11" class="soba s-main" data-roomName="Soba 3" data-roomNameEn="Room 3"></div><div id="sobaY" class="soba"></div>
+            </div>
+            <div id="row3">
+                <div id="soba12" class="soba s-main" data-roomName="Soba 7" data-roomNameEn="Room 7"></div><div id="soba13" class="soba" data-roomName="Datacenter"></div><div id="soba14" class="soba"></div><div id="soba15" class="soba"></div><div id="soba16" class="soba"></div><div id="soba17" class="soba s-main" data-roomName="Watson plakat" data-roomNameEn="Watson poster"></div><div id="soba18" class="soba" data-roomName="Watson plakat" data-roomNameEn="Watson poster"></div><div id="soba19" class="soba" data-roomName="Watson plakat" data-roomNameEn="Watson poster"></div><div id="sobaZ" class="soba"></div>
+            </div>
+            <div id="row4">
+                <div id="soba20" class="soba"></div><div id="soba21" class="soba"></div><div id="soba22" class="soba"></div><div id="soba23" class="soba"></div><div id="soba24" class="soba"></div><div id="sobaW" class="soba"></div>
+            </div>
+            <div id="row5">
+                <div id="soba25" class="soba"></div><div id="soba26" class="soba"></div><div id="soba27" class="soba"></div><div id="soba28" class="soba"></div><div id="soba29" class="soba"></div><div id="soba30" class="soba"></div>
+            </div>
+            <div id="row6">
+                <div id="soba31" class="soba"></div><div id="soba32" class="soba"></div><div id="soba33" class="soba"></div><div id="soba34" class="soba"></div><div id="soba35" class="soba"></div><div id="soba36" class="soba"></div><div id="soba37" class="soba"></div>
+            </div>
+            <div id="row7">
+                <div id="soba38" class="soba"></div><div id="soba39" class="soba s-main" data-roomName="Soba 6" data-roomNameEn="Room 6"></div><div id="soba40" class="soba"></div><div id="soba41" class="soba"></div><div id="soba42" class="soba"></div><div id="soba43" class="soba"></div><div id="soba44" class="soba"></div>
+            </div>
+            <div id="row8">
+                <div id="soba45" class="soba"></div><div id="soba46" class="soba" data-roomName="Soba 6" data-roomNameEn="Room 6"></div><div id="soba47" class="soba" data-roomName="WC hodnik" data-roomNameEn="WC hallway"></div><div id="soba48" class="soba s-main" data-roomName="WC hodnik" data-roomNameEn="WC hallway"></div><div id="soba49" class="soba" data-roomName="WC hodnik" data-roomNameEn="WC hallway"></div><div id="soba50" class="soba"></div><div id="soba51" class="soba"></div>
+            </div>
+            <div id="row9">
+                <div id="soba52" class="soba"></div><div id="soba53" class="soba" data-roomName="Soba 6" data-roomNameEn="Room 6"></div><div id="soba54" class="soba s-main" data-roomName="Soba 5" data-roomNameEn="Room 5"></div><div id="soba55" class="soba"></div><div id="soba56" class="soba"></div>
+            </div>
+        </div>
+        </div>
+        <div class="col-md-4">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td id="si-top-left" class="soba-info">
+                            <h4 class="si-room"></h4>
+                            <span class="si-sensor"></span><br />
+                            <span class="si-datatype"></span>: <span class="si-data"></span><br />
+                            <span class="lang si">Zadnji podatek</span><span class="lang en">Last log</span>: <span class="si-lastlog"></span><span class="lang si"> minut nazaj</span><span class="lang en">min ago</span>
+                        </td>
+                        <td id="si-top-right" class="soba-info">
+                            <h4 class="si-room"></h4>
+                            <span class="si-sensor"></span><br />
+                            <span class="si-datatype"></span>: <span class="si-data"></span><br />
+                            <span class="lang si">Zadnji podatek</span><span class="lang en">Last log</span>: <span class="si-lastlog"></span><span class="lang si"> minut nazaj</span><span class="lang en">min ago</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="si-bottom-left" class="soba-info">
+                            <h4 class="si-room"></h4>
+                            <span class="si-sensor"></span><br />
+                            <span class="si-datatype"></span>: <span class="si-data"></span><br />
+                            <span class="lang si">Zadnji podatek</span><span class="lang en">Last log</span>: <span class="si-lastlog"></span><span class="lang si"> minut nazaj</span><span class="lang en">min ago</span>
+                        </td>
+                        <td id="si-bottom-right" class="soba-info">
+                            <h4 class="si-room"></h4>
+                            <span class="si-sensor"></span><br />
+                            <span class="si-datatype"></span>: <span class="si-data"></span><br />
+                            <span class="lang si">Zadnji podatek</span><span class="lang en">Last log</span>: <span class="si-lastlog"></span><span class="lang si"> minut nazaj</span><span class="lang en">min ago</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="lang si" colspan="2">
+                            <p>Z zgornjega menija izberite senzor, ki naj ga tloris prikazuje.</p>
+                            <p>Za več informacij o sobi postavite miško nad željeno sobo.</p>
+                        </td>
+                        <td class="lang en" colspan="2">
+                            <p>Pick a sensor from the dropdown menu above, to display data on the ground plan.</p>
+                            <p>Move your mouse above room to display additional information.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--skriti div-i, da koda nalozi senzor -->
+<div class="s-main" data-roomName="Datacenter 1"></div>
+<div class="s-main" data-roomName="Datacenter 2"></div>
+<div class="s-main" data-roomName="Datacenter 3"></div>
+<div class="s-main" data-roomName="Datacenter 4"></div>
+<div class="s-main" data-roomName="IoT tabla 1"></div>
+<div class="s-main" data-roomName="IoT tabla 2"></div>
+
+<script>
+// nastavi visino tlorisa
+set_tloris_height();
+
+/**
+ * set_tloris_height - Nastavi višino tlorisa glede na širino
+ */
+function set_tloris_height() {
+    $("#tloris").height($("#tloris").width() * 1.225);
+}
+$(window).resize(set_tloris_height);
+
+// Pridobljeni podatki o senzorjih. Nastavi jih get_data
+var recieved_data = {};
+get_data(); // Začetni klic za pridobitev podatkov
+
+/**
+ * get_data - Vrne podatke o senzorjih v sobaj in jih shrani v recieved_data.
+ */
+function get_data() {
+    $(".s-main").each(function(idx, main_item) {
+        var room_name = $(main_item).data("roomname");
+        $.get("http://iotplatformiicljuljana.mybluemix.net/room_data?room=" + room_name)
+            .done(function(data) {
+                console.log(data);
+
+                if(data['ID'] == "Solvera") {
+                    data['_id'] = "Solvera: " + data['_id']; // prepend solvera
+                    data['Temp'] = data['temp1'];
+                    data['Lum'] = "-";
+                    data['RelHum'] = "-";
+                    data['timestamp'] *= 1000;
+                }
+                //ker imajo eni firefly namesto 'Lum' kar 'Lux'
+                if (data["Lux"] >= 0) {
+                    data["Lum"] = data["Lux"];
+                }
+
+                recieved_data[room_name] = data;
+
+                set_colors(); // osvezi barve
+            })
+            .fail(function(error) {
+                console.log(error);
+            });
+    });
+}
+
+hover_out(); //prikaze zunanji senzor in skrije ostali prikaz
+var timeout_id = null; // ID timeouta (Če se premaknemo/hover_in v drug div, se s tem id-jem počisti prejšnji timeout)
+
+/**
+ * show_data - Prikaže podatke o sobi room v target div-u.
+ * Če podatkov še ni, nanje počaka (se kliče vsakih 200ms).
+ *
+ * @param  {string} room   Soba, katere podatki naj se prikažejo
+ * @param  {jQuery element} target div, v katerega se vstavijo podatki
+ * @param  {string} room_en   Ime sobe v anglescini. Ce je kot jezik izbrana anglescina se bo prikazal tale string. Ce je ime isto v ang. in slo., pusti null.
+ */
+function show_data(room, target, room_en) {
+    if(timeout_id !== null) {
+        clearTimeout(timeout_id);
+        timeout_id = null;
+    }
+
+    var data = recieved_data[room];
+    if(typeof data !== 'undefined') {
+        if(current_language === 'en' && typeof room_en !== 'undefined') {
+            $(target + " .si-room").text(room_en);
+        } else {
+            $(target + " .si-room").text(room);
+        }
+
+        $(target + " .si-sensor").text(data['_id']);
+
+        var datatype = current_sensor;
+        $(target + " .si-datatype").text(datatype);
+        $(target + " .si-data").text(data[datatype]);
+
+        var last_log = Math.floor((Date.now() - data['timestamp']) / 1000 / 60);
+        $(target + " .si-lastlog").text(last_log);
+
+		if (room.slice(0,10) == "Datacenter") {
+			room = "Datacenter";
+		}
+		if (room.slice(0,9) === "IoT tabla") {
+			room = "IoT tabla";
+		}
+
+        $(".soba").each(function(idx) {
+            if($(this).data("roomname") === room) {
+                $(this).css("opacity", "0.5");
+            }
+        })
+
+        $(target).show();
+    } else {
+        setTimeout(function() {
+            show_data(room, target);
+        }, 200);
+    }
+}
+
+// ob spremembi dropdown menuja osveži podatek o zunanjem senzorju in ponovno obarvaj sobe
+var current_sensor = 'Temp';
+function change_sensor(sensor, caller) {
+    current_sensor = sensor;
+    console.log(caller);
+    $("#btn-dropdown").html($(caller).html() + "<span class='caret'></span>");
+    show_data("Zunanji senzor", "#si-top-left", "Outdoor sensor");
+    set_colors();
+}
+/*$("#select-sensor").change(function() {
+    show_data("Zunanji senzor", "#si-top-left", "Outdoor sensor");
+    set_colors();
+});*/
+
+/**
+ * set_colors - Nastavi barve sob glede na podatke in izbiro v dropdown menuju.
+ */
+function set_colors() {
+    var data_type = current_sensor;
+    //nastavi barvo
+    $(".soba").css("background-color", "white");
+    $(".soba, #tloris").each(function(idx) {
+        var room_name = $(this).data("roomname");
+        if(room_name === "Datacenter") {
+            var data_available = true;
+            for(var i = 1; i <= 4; i++) {
+                if(typeof recieved_data["Datacenter " + i] === 'undefined') {
+                    data_available = false;
+                }
+            }
+
+            if(data_available) {
+                //izracunaj povprecje zgoraj, spodaj
+                var povp_zgoraj = (recieved_data["Datacenter 1"][data_type] +
+                                  recieved_data["Datacenter 2"][data_type]) / 2;
+                var povp_spodaj = (recieved_data["Datacenter 3"][data_type] +
+                                   recieved_data["Datacenter 4"][data_type]) / 2;
+                var color_zgoraj = get_color(data_type, povp_zgoraj);
+                var color_spodaj = get_color(data_type, povp_spodaj);
+                applyGradient(color_zgoraj, color_spodaj, "#soba13"); //soba13 je datacenter
+            }
+        }
+		if (room_name === "IoT tabla") {
+			room_name = "IoT tabla 1";
+		}
+        if(typeof room_name !== 'undefined' && typeof recieved_data[room_name] !== 'undefined' && room_name !== "Zunanji senzor") {
+            $(this).css("background-color", get_color(data_type, recieved_data[room_name][data_type]));
+        }
+    })
+}
+
+// funkcije, ki se izvedejo, če gremo z miško nad sobo
+$(".soba").hover(hover_in, hover_out);
+
+/**
+ * hover_in - Prikaže podatke o zunanjem senzorju in sobi, nad katero je miška.
+ * Funkcija se izvede, ko gremo z miško nad div z razredom soba.
+ */
+function hover_in() {
+    var room = $(this).data("roomname");
+    var room_en = $(this).data("roomnameen");
+    if(typeof room !== 'undefined') {
+        if(room === "Datacenter") {
+            show_data("Datacenter 1", "#si-top-left");
+            show_data("Datacenter 2", "#si-top-right");
+            show_data("Datacenter 3", "#si-bottom-left");
+            show_data("Datacenter 4", "#si-bottom-right");
+        } else if (room === "IoT tabla") {
+			//console.log("QWE");
+			show_data("IoT tabla 1", "#si-top-left");
+			show_data("IoT tabla 2", "#si-top-right")
+		} else {
+            show_data(room, "#si-top-right", room_en);
+        }
+    }
+}
+
+/**
+ * hover_out - Skrije vse podatke o sobah in prikaži podatek o zunanjem senzorju.
+ * Funkcija se izvede, ko gremo z miško ven iz div-a z razredom soba.
+ */
+function hover_out() {
+    $(".soba").css("opacity", "1.0");
+    $(".soba-info").hide();
+    show_data("Zunanji senzor", "#si-top-left", "Outdoor sensor");
+}
+
+var colors = {}; // Generirane barve za barvanje sob. Ustvari generate_colors
+var colors_generated = false; // Ali so barve že ustvarjene
+var steps = 10; // Kolikov barv naj ustvarimo za vsak tip senzorja (Temp/Lum/RelHum)
+
+/**
+ * generate_colors - Ustvari gradiente, ki se uporabljajo pri barvanju sob.
+ * Barve se shranijo v spremenljivko colors.
+ * V color_min so določene barve za minimalne vrednosti Temp/Lum/RelHum,
+ * v color_max pa barve za maximalne vrednosti.
+ * Za izbiro barv sem uporabil: http://meyerweb.com/eric/tools/color-blend/#FF0000:0000FF:10:rgbd
+ */
+function generate_colors() {
+
+    // rgb minimumi in maximumi za Temp, Lum in RelHum
+    var color_min = {
+        "Temp": [0, 51, 255], //rgb
+        "Lum" : [80, 80, 80],
+        "RelHum" : [255, 0, 0]
+    };
+
+    var color_max = {
+        "Temp": [255, 153, 0], //rgb
+        "Lum" : [255, 255, 51],
+        "RelHum" : [0, 0, 255]
+    };
+
+    var step = {
+        "Temp": null,
+        "Lum": null,
+        "RelHum": null
+    };
+    for(var s in step) {
+        step[s] = [];
+        for(var i = 0; i < 3; i++)
+            step[s][i] = (color_max[s][i] - color_min[s][i]) / steps;
+        colors[s] = [];
+    }
+
+    for(var i = 0; i < steps; i++) {
+        for(var s in step) {
+            var c_red = Math.floor(color_min[s][0] + i*step[s][0]);
+            var c_green = Math.floor(color_min[s][1] + i*step[s][1]);
+            var c_blue = Math.floor(color_min[s][2] + i*step[s][2]);
+
+            colors[s][i] = "rgb(" + c_red + "," + c_green + "," + c_blue + ")";
+        }
+    }
+
+    colors_generated = true;
+}
+
+// Minimumi in maksimumi za barvanje sob.
+var border_values = {
+    "Temp": [18, 30], //min, max
+    "Lum" : [50, 800],
+    "RelHum" : [20, 80]
+};
+
+/**
+ * get_color - Vrne barvo za določeno vrednost senzorja(sensor_val)
+ * in tipa podatka(sensor_type).
+ *
+ * @param  {type} sensor_type Temp/Lum/RelHum
+ * @param  {type} sensor_val  Vrednost senzorja
+ * @return {string}             rgb(r,g,b) string, ki ga lahko vstavimo v CSS (background-color)
+ */
+function get_color(sensor_type, sensor_val) {
+    if(!colors_generated) {
+        generate_colors();
+    }
+
+    if(sensor_val <= border_values[sensor_type][0]) {
+        return colors[sensor_type][0];
+    } else if(sensor_val > border_values[sensor_type][1]) {
+        return colors[sensor_type][steps-1];
+    } else {
+        var step = (border_values[sensor_type][1] - border_values[sensor_type][0]) / steps;
+        var smin = border_values[sensor_type][0];
+        for(var i = 0; i < steps; i++) {
+            var smax = smin + step;
+            if(sensor_val > smin && sensor_val <= smax) {
+                return colors[sensor_type][i];
+            }
+            smin = smax;
+        }
+    }
+}
+
+/**
+ * applyGradient - Elementu za ozadje nastavi top-down gradient.
+ *
+ * @param  {css-color} color1 Zgornja barva
+ * @param  {css-color} color2 Spodnja barva
+ * @param  {string} target Element, kateremu ozadje se nastavi
+ */
+function applyGradient(color1, color2, target) {
+    // from http://www.w3schools.com/css/css3_gradients.asp
+    /*$(target).css("background", color1);
+    $(target).css("background", "-webkit-linear-gradient(" + color1 + ", " + color2 + ")");
+    $(target).css("background", "-o-linear-gradient(" + color1 + ", " + color2 + ")");
+    $(target).css("background", "-moz-linear-gradient(" + color1 + ", " + color2 + ")");*/
+    $(target).css("background", "linear-gradient(" + color1 + ", " + color2 + ")");
+}
+
+</script>

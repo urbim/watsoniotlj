@@ -1,0 +1,52 @@
+<div class="panel panel-default">
+    <div class=panel-heading>
+        SMART kapp OCR
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <span class="lang si">Zadnji prepoznani tekst</span><span class="lang en">Last recognised text</span>:
+            <div class="well well-sm" id="ocr_text"></div>
+        </div>
+        <div class="col-md-12 lang si">
+            <p>
+                V zgornjem kvadratku je prikazan zadnji prepoznani tekst s table <b>SMART kapp</b>.
+            </p>
+            <p>
+                Da zaženete novo prepoznavanje teksta, napišite nekaj na tablo in se nanjo povežite z aplikacijo
+                SMART kapp. V meniju zgoraj desno izberite možnost <i>'Share as image'</i> in nato izberite aplikacijo,
+                s katero pošiljate e-pošto. E-mail pošljite na naslov <i>iotlj.img@gmail.com</i> in počakajte nekaj
+                časa, da se konča prepoznavanje teksta. Nato osvežite stran.
+            </p>
+            <p>
+                Če je v prepoznanem tekstu barva (v angleščini), se barva LED traku na IoT tabli nastavi na najdeno barvo.
+                Če je v prepoznanem tekstu črka 'p' kot samostojna beseda, se sproži kamera na IoT tabli.
+            </p>
+        </div>
+        <div class="col-md-12 lang en">
+            <p>
+                In the upper square, the last recognised text from <b>SMART kapp</b> whiteboard is displayed.
+            </p>
+            <p>
+                To begin a new text recognition, write something on the whiteboard and connect to the whiteboard with
+                the application SMART kapp. In the upper right menu choose option <i>'Share as image'</i> and
+                then pick your application for sending e-mails. Send the e-mail to the address <i>iotlj.img@gmail.com</i>
+                and wait a few seconds for text recognition to finish. Then refresh this page.
+            </p>
+            <p>
+                If recognised text contains color, the color of the LED strip on the whiteboard changes color to the
+                recognised color. If recognised text contains word 'p', the camera on the IoT table will take a picture.
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+// GET poizvedba, ki vrne podatke o zadnjem prepoznavanju teksta
+$.get("http://iotplatformiicljuljana.mybluemix.net/last_ocr")
+    .done(function(data) {
+        $("#ocr_text").html(data.replace("<", "&lt").replace(">", "&gt").replace('\n', '<br />'));
+    })
+    .fail(function(error) {
+        console.log(error);
+    });
+</script>

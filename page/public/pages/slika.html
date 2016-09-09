@@ -1,0 +1,195 @@
+<div class="panel panel-default" id="main_panel">
+    <div class="panel-heading">
+        <span class="lang si">Pozdravljen</span><span class="lang en">Welcome</span><span id="span_user"></span>!
+        <div class="select-header">
+            <span class="glyphicon glyphicon-cog gly-spin" id="loading-image"></span>
+            <button type="button" class="btn btn-primary btn-xs" id="slikaj_button" onclick="take_picture('take_picture')"><span class="lang si">Slikaj</span><span class="lang en">Take a picture</span>!</button>
+            <button type="button" class="btn btn-primary btn-xs" id="slikaj_button_tv" onclick="take_picture('take_picture_tv')"><span class="lang si">Slikaj IoT tablo</span><span class="lang en">Take a picture of the IoT table</span>!</button>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-6">
+            <img src="http://iotplatformiicljuljana.mybluemix.net/last_image" id="vr-slika" class="img-responsive img-thumbnail" data-action="zoom"/>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-info" id="vr">
+                <div class="panel-heading">IBM Watson Visual recognition</div>
+                <ul class="list-group">
+                    <li class="list-group-item lang si">
+                        Z <span class="vr-age-score"></span> verjetnostjo sem prepričan,
+                        da ste stari od <span class="vr-min"></span>
+                        do <span class="vr-max"></span> let.
+                    </li>
+                    <li class="list-group-item lang en">
+                        I am <span class="vr-age-score"></span>% sure,
+                        that your age is between <span class="vr-min"></span>
+                        and <span class="vr-max"></span> years.
+                    </li>
+                    <li class="list-group-item lang si">
+                        Z <span class="vr-gender-score"></span> verjetnostjo
+                        sem prepričan, da ste <span class="vr-gender"></span> spola.
+                    </li>
+                    <li class="list-group-item lang en">
+                        I am <span class="vr-gender-score"></span>% sure
+                        that you are <span class="vr-gender"></span>.
+                    </li>
+                </ul>
+            </div>
+            <div class="lang si">
+                <p>
+                    V internetu stvar sta povezani dve <b>RPi kameri</b>.
+                </p>
+                <p>
+                    Slikanje z IoT table lahko sprožite z gumbom <i>'Slikaj!'</i>
+                    ali pa tako, da zatresete senzor na IoT tabli pod desnim zaslonom.
+                </p>
+                <p>
+                    Slikanje IoT table lahko sprožite z gumbom <i>'Slikaj IoT tablo!'</i>
+                </p>
+                <p>
+                    Ko se konča <b>IBM Watson Visual Recognition</b>, se stran samodejno osveži.
+                    To lahko traja do pol minute.
+                </p>
+            </div>
+            <div class="lang en">
+                <p>
+                    There are two <b>RPi cameras</b> connected to the Internet of Things.
+                </p>
+                <p>
+                    You can take a picture from the IoT table by pressing button <i>'Take a picture!'</i>
+                    or by shaking the sensor on IoT table under the right screen.
+                </p>
+                <p>
+                    You can take a picture of the IoT table by pressing button <i>'Take a picture of the IoT table!'</i>
+                </p>
+                <p>
+                    When <b>Visual Recognition</b> ends, the page refreshes automaticly.
+                    This can take up to 30 seconds.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+// zadnji id slike
+var last_no = "";
+// na začetku skrij podatke o prepoznavanju in glyphicon loading image
+$("#vr").hide();
+$("#loading-image").hide();
+
+// začetni nalaganje slike in vr-info
+refresh_if_changed();
+// interval osveževanja
+refresh_interval = setInterval(refresh_if_changed, 5000); // gets cleared in code.js
+
+/**
+ * refresh_if_changed - Če zazna, da je na strežniku novejša slika, požene funkcijo refresh_me.
+ * Spremembo zazna tako, da primerja id naložene slike z id-jem slike zadjega prepoznavanja.
+ * Če je prepoznavanje v teku, z nalaganjem počaka.
+ */
+function refresh_if_changed() {
+    console.log("check");
+    $.get("http://iotplatformiicljuljana.mybluemix.net/last_vr_info")
+        .done(function(data) {
+            if(last_no != data['_id'] && data['cc-info'] == "cc-done" && data['vr-info'] == "vr-done") {
+                last_no = data['_id'];
+                console.log("refresh!");
+                refresh_me(data);
+            }
+        })
+        .fail(function(error) {
+            console.log(error);
+        });
+}
+
+/**
+ * refresh_me - Osveži sliko in podatke prepoznavanja.
+ *
+ * @param  {type} data Data, vrnjen iz /last_vr_info (Poda funkcija refresh_if_changed, da ne ustvarimo še ene GET poizvedbe)
+ */
+function refresh_me(data) {
+    //console.log(data);
+
+    var classes_present = false;
+    var faces_present = false;
+
+    if(data['classes'] != null && data['classes'].length > 0) {
+        var max = data['classes'][0];
+        data['classes'].forEach(function(el) {
+            if(el['score'] > max['score']) {
+                max = el;
+            }
+        });
+        $("#span_user").text(" " + max['class']);
+
+        classes_present = true;
+    }
+
+    if(data['faces'] != null && data['faces'].length > 0) {
+        var face = data['faces'][0];
+        var min = "0";
+        var max = "99";
+        if(face['age']['min'] != null) {
+            min = face['age']['min'];
+        }
+        if(face['age']['max'] != null) {
+            max = face['age']['max'];
+        }
+        $(".vr-age-score").text(face['age']['score']);
+        $(".vr-min").text(min);
+        $(".vr-max").text(max);
+
+        var gender = (face['gender']['gender'] === "MALE") ? "<span class='lang si'>moškega</span><span class='lang en'>male</span>" : "<span class='lang si'>ženskega</span><span class='lang en'>female</span>";
+        $(".vr-gender-score").text(face['gender']['score']);
+        $(".vr-gender").html(gender);
+
+        set_language(current_language); //osvezi jezik, ker smo spreminjali htlm (gender)
+
+        faces_present = true;
+    }
+
+    if(faces_present) {
+        $("#vr").show();
+    } else {
+        $("#vr").hide();
+    }
+
+    if(classes_present === false) {
+        $("#span_user").text("");
+    }
+
+    // force refresh image
+    $("#vr-slika").attr("src", "http://iotplatformiicljuljana.mybluemix.net/last_image?" + Date.now());
+}
+
+/**
+ * take_picture - Ustvari GET zahtevo, ki sproži slikanje in izklopi gumbe.
+ */
+function take_picture(target) {
+    disable_buttons();
+    $.get("http://iotplatformiicljuljana.mybluemix.net/" + target)
+        .done(function(data) {
+            console.log("done!");
+        })
+        .fail(function(error) {
+            console.log(error);
+        });
+}
+
+/**
+ * disable_buttons - Izklopi gumbe za slikanje, prikaze loading znak in cez 5 sekund klice funkcije enable_buttons.
+ */
+function disable_buttons() {
+    $("#slikaj_button, #slikaj_button_tv").addClass("disabled");
+    $("#loading-image").show();
+    setTimeout(enable_buttons, 5000);
+}
+
+/**
+ * enable_buttons - Vklopi gumbe in skrije loading znak.
+ */
+function enable_buttons() {
+    $("#slikaj_button, #slikaj_button_tv").removeClass("disabled");
+    $("#loading-image").hide();
+}
+</script>

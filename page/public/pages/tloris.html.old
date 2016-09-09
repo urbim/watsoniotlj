@@ -1,0 +1,343 @@
+<div class="panel panel-default">
+    <div class=panel-heading>
+        Tloris
+        <div class="select-header">
+            <span>Izberi senzor:</span>
+            <select id="select-sensor">
+                <option value="temp">Temperatura</option>
+                <option value="lum">Svetlost</option>
+                <option value="hum">Vlažnost</option>
+            </select>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-8">
+        <div id="tloris">
+            <div id="row1">
+                <div id="soba1" class="soba s-main FF-368" data-roomName="Soba 9"></div><div id="soba2" class="soba s-main FF-321" data-roomName="Soba 1a"></div><div id="soba3" class="soba s-main FF-369" data-roomName="Soba 1b"></div><div id="soba4" class="soba s-main FF-382" data-roomName="Soba 2"></div><div id="sobaX" class="soba"></div>
+            </div>
+            <div id="row2">
+                <div id="soba5" class="soba FF-394 s-main" data-roomName="Soba 8"></div><div id="soba6" class="soba s-main FF-431" data-roomName="Innovation tabla"></div><div id="soba7" class="soba FF-431" data-roomName="Innovation tabla"></div><div id="soba8" class="soba FF-398" data-roomName="IoT tabla"></div><div id="soba9" class="soba s-main FF-398" data-roomName="IoT tabla"></div><div id="soba10" class="soba FF-398" data-roomName="IoT tabla"></div><div id="soba11" class="soba s-main FF-353" data-roomName="Soba 3"></div><div id="sobaY" class="soba"></div>
+            </div>
+            <div id="row3">
+                <div id="soba12" class="soba s-main FF-326" data-roomName="Soba 7"></div><div id="soba13" class="soba" data-roomName="Datacenter">
+					<div id="soba13-zgoraj" class="s-main sobaLabel FF-390 FF-409" data-roomName="Datacenter zgoraj"></div>
+					<div id="soba13-spodaj" class="s-main sobaLabel FF-430 FF-424" data-roomName="Datacenter spodaj"></div>
+					</div><div id="soba14" class="soba"></div><div id="soba15" class="soba"></div><div id="soba16" class="soba"></div><div id="soba17" class="soba s-main FF-318" data-roomName="Watson plakat"></div><div id="soba18" class="soba FF-318" data-roomName="Watson plakat"></div><div id="soba19" class="soba FF-318" data-roomName="Watson plakat"></div><div id="sobaZ" class="soba"></div>
+            </div>
+            <div id="row4">
+                <div id="soba20" class="soba"></div><div id="soba21" class="soba"></div><div id="soba22" class="soba"></div><div id="soba23" class="soba"></div><div id="soba24" class="soba"></div><div id="sobaW" class="soba"></div>
+            </div>
+            <div id="row5">
+                <div id="soba25" class="soba"></div><div id="soba26" class="soba"></div><div id="soba27" class="soba"></div><div id="soba28" class="soba"></div><div id="soba29" class="soba"></div><div id="soba30" class="soba"></div>
+            </div>
+            <div id="row6">
+                <div id="soba31" class="soba"></div><div id="soba32" class="soba"></div><div id="soba33" class="soba"></div><div id="soba34" class="soba"></div><div id="soba35" class="soba"></div><div id="soba36" class="soba"></div><div id="soba37" class="soba"></div>
+            </div>
+            <div id="row7">
+                <div id="soba38" class="soba"></div><div id="soba39" class="soba s-main FF-327" data-roomName="Soba 6"></div><div id="soba40" class="soba"></div><div id="soba41" class="soba"></div><div id="soba42" class="soba"></div><div id="soba43" class="soba"></div><div id="soba44" class="soba"></div>
+            </div>
+            <div id="row8">
+                <div id="soba45" class="soba"></div><div id="soba46" class="soba FF-327" data-roomName="Soba 6"></div><div id="soba47" class="soba FF-433" data-roomName="WC hodnik"></div><div id="soba48" class="soba s-main FF-433" data-roomName="WC hodnik"></div><div id="soba49" class="soba FF-433" data-roomName="WC hodnik"></div><div id="soba50" class="soba"></div><div id="soba51" class="soba"></div>
+            </div>
+            <div id="row9">
+                <div id="soba52" class="soba"></div><div id="soba53" class="soba FF-327" data-roomName="Soba 6"></div><div id="soba54" class="soba s-main FF-301" data-roomName="Soba 5"></div><div id="soba55" class="soba"></div><div id="soba56" class="soba"></div>
+            </div>
+        </div>
+        </div>
+		<div class="col-md-1"></div>
+        <div class="col-md-3">
+
+		<div class="well" id="srStatus">
+			<h2>DATACENTER</h2>
+
+			<p>Delta zgoraj: <span id="srDeltaZgoraj"></span></p>
+			<p>Delta spodaj: <span id="srDeltaSpodaj"></span></p>
+
+		</div>
+
+		<div class="well" id="sensorStatus">
+			Za podrobnosti miško pomaknite nad sobo.
+		</div>
+
+		</div>
+    </div>
+</div>
+<div class="s-main 70B3D57F800000DA" style="display:none"></div> <!-- skriti div, da koda nalozi solverin senzor -->
+
+<script>
+var solvera_zunanji = "70B3D57F800000DA";
+//<span class="abs">lala</span>
+set_tloris_height();
+
+function set_tloris_height() {
+    $("#tloris").height($("#tloris").width() * 1.225);
+}
+$(window).resize(set_tloris_height);
+
+var recieved_data = {};
+function get_data() {
+    $(".s-main").each(function(idx, main_item) {
+        var classList = $(this).attr('class').split(/\s+/);
+        $.each(classList, function(index, firefly_id) {
+            if (firefly_id.substring(0, 3) === 'FF-' || firefly_id == solvera_zunanji) {
+                $.get("http://iotplatformiicljuljana.mybluemix.net/sensor_data?sensor=" + firefly_id)
+                    .done(function(data) {
+                        console.log(data);
+
+                        if(data['ID'] == "Solvera") {
+                            data['Temp'] = data['temp1'];
+                            data['timestamp'] *= 1000;
+                        }
+                        recieved_data[firefly_id] = data;
+
+						//ker imajo eni firefly namesto 'Lum' kar 'Lux'
+						if (recieved_data[firefly_id]["Lux"] >= 0) {
+							recieved_data[firefly_id]["Lum"] = recieved_data[firefly_id]["Lux"];
+						}
+
+						//VARIANTA, kjer sta serverroom tooltipa skupaj v enem in oba v istem stolpcu
+						/*if ($(main_item).find(".soba-info").length > 0) {
+
+							$(main_item).find(".soba-info").append("<br />" + firefly_id + "<br />" +
+                                          "<span class='info-temp'>Temp: " + data['Temp'] + "<br /></span>" +
+                                          "<span class='info-lum'>Lum: " + data['Lum'] + "<br /></span>" +
+                                          "<span class='info-hum'>Hum: " + data['RelHum'] + "<br /></span>" +
+                                          "Last log: " + Math.floor((Date.now() - data['timestamp']) / 1000 / 60) + "min ago</div>");
+
+						} else {
+
+							$(main_item).append("<div class='soba-info'>" + firefly_id + "<br />" +
+                                          "<span class='info-temp'>Temp: " + data['Temp'] + "<br /></span>" +
+                                          "<span class='info-lum'>Lum: " + data['Lum'] + "<br /></span>" +
+                                          "<span class='info-hum'>Hum: " + data['RelHum'] + "<br /></span>" +
+                                          "Last log: " + Math.floor((Date.now() - data['timestamp']) / 1000 / 60) + "min ago</div>");
+
+						}*/
+
+						//VARIANTA, kjer sta serverroom tooltipa ločena, oba v isti vrstici
+						if ($(main_item).find(".soba-info").length > 0) {
+
+							$(main_item).append("<div class='soba-info' style='margin-left:110px;'>" + firefly_id + "<br />" +
+                                          "<span class='info-temp'>Temp: " + data['Temp'] + "<br /></span>" +
+                                          "<span class='info-lum'>Lum: " + data['Lum'] + "<br /></span>" +
+                                          "<span class='info-hum'>Hum: " + data['RelHum'] + "<br /></span>" +
+                                          "Last log: " + Math.floor((Date.now() - data['timestamp']) / 1000 / 60) + "min ago</div>");
+
+						} else {
+
+							$(main_item).append("<div class='soba-info'>" + firefly_id + "<br />" +
+                                          "<span class='info-temp'>Temp: " + data['Temp'] + "<br /></span>" +
+                                          "<span class='info-lum'>Lum: " + data['Lum'] + "<br /></span>" +
+                                          "<span class='info-hum'>Hum: " + data['RelHum'] + "<br /></span>" +
+                                          "Last log: " + Math.floor((Date.now() - data['timestamp']) / 1000 / 60) + "min ago</div>");
+
+						}
+
+
+                        $(main_item).find(".soba-info").hide();
+                        nastavi_podatke_senzorjev();
+                    })
+                    .fail(function(error) {
+                        console.log(error);
+                    });
+            }
+        });
+    });
+}
+get_data();
+
+$("#select-sensor").change(function() {
+    nastavi_podatke_senzorjev();
+});
+
+function nastavi_podatke_senzorjev() {
+    var type_to_data = {
+        "temp": "Temp",
+        "lum" : "Lum",
+        "hum" : "RelHum"
+    };
+    var select_type = $("#select-sensor").val();
+    var data_type = type_to_data[select_type];
+    //skrij vse
+    $(".s-main div span").hide();
+    //pokazi samo izbrano
+    $(".info-" + select_type).show();
+    //nastavi barvo
+    $(".soba").css("background-color", "white");
+    for(var firefly_id in recieved_data) {
+        $("." + firefly_id).css("background-color", get_color(select_type, recieved_data[firefly_id][data_type]));
+    }
+}
+
+$(".soba").hover(hover_in, hover_out);
+$(".sobaLabel").hover(hover_in, hover_out); //server room .soba class
+var datacenterFF = ["FF-390", "FF-409", "FF-424", "FF-430"];
+function hover_in() {
+    var classList = $(this).attr('class').split(/\s+/);
+	var vsebina = "";
+	var change = false;
+	//TODO: DATACENTER VRŽE PODVOJNE SENZORJE!!
+    $.each(classList, function(index, firefly_id) {
+        if (firefly_id.substring(0, 3) === 'FF-') {
+            $(".s-main").each(function(idx, main_item) {
+                if($(main_item).hasClass(firefly_id)) {
+
+					$("."+firefly_id).each(function(id, item) {
+						$(item).css("opacity", "0.7");
+						//console.log(item);
+					});
+
+					var info = $(main_item).find(".soba-info");
+					//console.log(info.html());
+					vsebina = "<h3>" + $(main_item).data("roomname") + "</h3>";
+
+					info.each(function (id, item) {
+						vsebina += item.innerHTML + "<br/><br/>";
+					});
+					//Datacenter dodatek
+					if ($.inArray(firefly_id, datacenterFF) > -1) {
+						$("#srStatus").css("display", "block");
+					}
+
+					change = true;
+				}
+            });
+        }
+    });
+
+
+	if (change) $("#sensorStatus").html(vsebina);
+}
+
+function hover_out() {
+    var classList = $(this).attr('class').split(/\s+/);
+    $.each(classList, function(index, firefly_id) {
+        if (firefly_id.substring(0, 3) === 'FF-') {
+            $(".s-main").each(function(idx, main_item) {
+                if($(main_item).hasClass(firefly_id)) {
+                    //$(main_item).find(".soba-info").hide();
+					$("."+firefly_id).each(function(id, item) {
+						$(item).css("opacity", "1.0");
+					});
+                    //var vsebina = $(main_item).find(".soba-info").html();
+                }
+            });
+        }
+    });
+    var data = recieved_data[solvera_zunanji];
+    var vsebina = "<h3>Zunanja temperatura</h3>" +
+        "Solvera: " + solvera_zunanji + "<br />" +
+        "<p><span class='info-temp'>Temp: " + data['Temp'] + "<br /></span>" +
+        "Last log: " + Math.floor((Date.now() - data['timestamp']) / 1000 / 60) + "min ago</p>" +
+        "<p>Za prikaz podatkov sobe pomaknite miško nad sobo.</p>"
+    $("#sensorStatus").html(vsebina);
+    $("#srStatus").css("display", "none");
+}
+
+var colors = {};
+var colors_generated = false;
+var steps = 10;
+function generate_colors() { //Za izbiro barv: http://meyerweb.com/eric/tools/color-blend/#FF0000:0000FF:10:rgbd
+
+    var color_min = {
+        "temp": [0, 51, 255], //rgb
+        "lum" : [80, 80, 80],
+        "hum" : [255, 0, 0]
+    };
+
+    var color_max = {
+        "temp": [255, 153, 0], //rgb
+        "lum" : [255, 255, 51],
+        "hum" : [0, 0, 255]
+    };
+
+    var step = {
+        "temp": null,
+        "lum": null,
+        "hum": null
+    };
+    for(var s in step) {
+        step[s] = [];
+        for(var i = 0; i < steps; i++)
+            step[s][i] = (color_max[s][i] - color_min[s][i]) / steps;
+        colors[s] = [];
+    }
+
+    for(var i = 0; i < steps; i++) {
+        for(var s in step) {
+            var c_red = Math.floor(color_min[s][0] + i*step[s][0]);
+            var c_green = Math.floor(color_min[s][1] + i*step[s][1]);
+            var c_blue = Math.floor(color_min[s][2] + i*step[s][2]);
+
+            colors[s][i] = "rgb(" + c_red + "," + c_green + "," + c_blue + ")";
+        }
+    }
+
+    colors_generated = true;
+}
+
+
+var temp_min = 18;
+var temp_max = 26;
+var border_values = {
+    "temp": [18, 26], //min, max
+    "lum" : [50, 800],
+    "hum" : [20, 80]
+};
+function get_color(sensor_type, sensor_val) {
+    if(!colors_generated) {
+        generate_colors();
+    }
+
+    if(sensor_val <= border_values[sensor_type][0]) {
+        return colors[sensor_type][0];
+    } else if(sensor_val > border_values[sensor_type][1]) {
+        return colors[sensor_type][steps-1];
+    } else {
+        var step = (border_values[sensor_type][1] - border_values[sensor_type][0]) / steps;
+        for(var i = 0; i < steps; i++) {
+            var smin = border_values[sensor_type][0] + i*step;
+            var smax = smin + step;
+            if(sensor_val > smin && sensor_val <= smax) {
+                return colors[sensor_type][i];
+            }
+        }
+    }
+}
+
+//Funkcija da po nekaj sekundah napolni DATACENTER polja
+setTimeout(srStatusRefresh, 2000);
+function srStatusRefresh() {
+	var data = recieved_data;
+
+	var ok = false;
+
+	if (data["FF-390"] && data["FF-424"]) {
+		var delta = data["FF-424"].Temp - data["FF-390"].Temp;
+		delta *= 100;
+		delta = Math.round(delta);
+		delta /= 100;
+		$("#srDeltaSpodaj").html(delta + "&#8451;");
+		ok = true;
+	}
+
+	if (data["FF-409"] && data["FF-430"]) {
+		var delta = data["FF-430"].Temp - data["FF-409"].Temp;
+		delta *= 100;
+		delta = Math.round(delta);
+		delta /= 100;
+		$("#srDeltaZgoraj").html(delta + "&#8451;");
+		ok = true;
+	}
+
+	if (ok) {
+		//$("#srStatus").css("display", "block");
+	} else {
+		setTimeout(srStatusRefresh, 1000);
+	}
+}
+
+
+
+</script>

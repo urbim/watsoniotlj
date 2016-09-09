@@ -1,0 +1,599 @@
+/* index.html */
+body {
+    padding-top: 50px;
+    background-image: url("../images/index/IoT_background_white.jpg");
+}
+
+#img-logo {
+    position:fixed;
+    left:0;
+    bottom:0;
+    margin:0;
+    width:10%;
+    background:url(../images/index/IIClogo.png) no-repeat bottom right;
+    background-size:100%;
+}
+
+#main-container {
+    padding-top: 50px;
+}
+
+#main-navigation {
+    cursor: pointer;
+}
+
+.dropdown-menu li {
+    cursor: pointer;
+}
+
+/* slika.html */
+#vr-slika, #blockchain-image {
+    width: 100%;
+    height: 100%;
+}
+
+#cp {
+    /*height: 300px;*/ /* visina control panel-a ;; FIX: nerabimo, raje damo height na knofe */
+}
+
+#cp-left, #cp-right {
+    height: 300px;
+}
+
+.list-group-item :hover{
+	cursor: pointer;
+}
+.list-group-item {
+	cursor: pointer;
+}
+
+.gly-spin {
+  -webkit-animation: spin 2s infinite linear;
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+
+  margin-left: 5px;
+}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+  }
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@-o-keyframes spin {
+  0% {
+    -o-transform: rotate(0deg);
+  }
+  100% {
+    -o-transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+    transform: rotate(359deg);
+  }
+}
+
+/* lucke.html */
+.btn-on-off {
+    width: 49%;
+    height: 100%;
+}
+
+.btn-apply, .cp-cp {
+    height: 48%;
+    width: 100%;
+    margin: 3px;
+}
+
+#lightState {
+    height: 20px;
+    text-align: center;
+    padding-top: 5px;
+}
+
+.select-header {
+    float: right;
+}
+
+/* blockchain.html */
+#bc-vr-info { /* tu je bil tudi .soba-info (ga ne rabimo vec) */
+    position: absolute;
+    background-color: black;
+    color: white;
+    padding: 5px;
+    opacity: 0.5;
+    border-radius: 5px;
+    font-size: 10px;
+}
+
+#bc-vr-info {
+    margin: 20px;
+}
+
+/* tloris.html */
+#sensor-dropdown {
+    float: right;
+    padding-left: 10px;
+}
+
+#tloris {
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+}
+
+.soba {
+    display:inline-block;
+    margin: 0px;
+    padding: 5px;
+    border: 3px solid black;
+}
+
+.soba-info {
+    width: 50%;
+}
+
+.si-sensor {
+    font-weight: bold;
+}
+
+.si-room {
+    font-weight: bolder;
+}
+
+#soba1 {
+    width: 20%;
+    height: 100%;
+}
+
+#soba2 {
+    width: 22.5%;
+    height: 100%;
+}
+
+#soba3 {
+    width: 22.5%;
+    height: 100%;
+}
+
+#soba4 {
+    width: 20%;
+    height: 100%;
+}
+
+#sobaX {
+    width: 15%;
+    height: 100%;
+    border-top: white;
+    border-right: white;
+    border-bottom: white;
+}
+
+#row1 {
+    width: 100%;
+    height: 24.48%;
+}
+
+#soba5 {
+    width: 12.5%;
+    height: 100%;
+}
+
+#soba6 {
+    width: 7.5%;
+    height: 100%;
+    border-right: white;
+}
+
+#soba7 {
+    width: 22.5%;
+    height: 100%;
+    border-left: white;
+    border-right: white;
+}
+
+#soba8 {
+    width: 15%;
+    height: 100%;
+    border-left: white;
+    border-right: white;
+    border-bottom: white;
+}
+
+#soba9 {
+    width: 7.5%;
+    height: 100%;
+    border-left: white;
+    border-right: white;
+}
+
+#soba10 {
+    width: 7.5%;
+    height: 100%;
+    border-left: white;
+    border-bottom: white;
+}
+
+#soba11 {
+    width: 12.5%;
+    height: 100%;
+}
+
+#sobaY {
+    width: 15%;
+    height: 100%;
+    border-top: white;
+    border-right: white;
+    border-bottom: white;
+}
+
+#row2 {
+    width: 100%;
+    height: 14.28%;
+}
+
+#soba12 {
+    width: 20%;
+    height: 100%;
+}
+
+#soba13 {
+    width: 22.5%;
+    height: 100%;
+	padding:0; /* padding da so barve lepše */
+}
+
+#soba14 {
+    width: 5%;
+    height: 100%;
+    border-right: white;
+    border-top: white;
+    border-bottom: white;
+}
+
+#soba15 {
+    width: 10%;
+    height: 100%;
+    border-left: white;
+    border-top: white;
+}
+
+#soba16 {
+    width: 7.5%;
+    height: 100%;
+}
+
+#soba17 {
+    width: 7.5%;
+    height: 100%;
+    border-right: white;
+    border-top: white;
+}
+
+#soba18 {
+    width: 5%;
+    height: 100%;
+    border-left: white;
+    border-right: white;
+}
+
+#soba19 {
+    width: 7.5%;
+    height: 100%;
+    border-left: white;
+    border-bottom: white;
+}
+
+#sobaZ {
+    width: 15%;
+    height: 100%;
+    border-top: white;
+    border-right: white;
+    border-bottom: white;
+}
+
+#row3 {
+    width: 100%;
+    height: 10.20%;
+}
+
+#soba20 {
+    width: 20%;
+    height: 100%;
+    border-left: white;
+    border-bottom: white;
+}
+
+#soba21 {
+    width: 22.5%;
+    height: 100%;
+    border-bottom: white;
+}
+
+#soba22 {
+    width: 5%;
+    height: 100%;
+    border-top: white;
+    border-bottom: white;
+}
+
+#soba23 {
+    width: 30%;
+    height: 100%;
+}
+
+#soba24 {
+    width: 7.5%;
+    height: 100%;
+    border-top: white;
+    border-bottom: white;
+}
+
+#sobaW {
+    width: 15%;
+    height: 100%;
+    border-top: white;
+    border-right: white;
+}
+
+#row4 {
+    width: 100%;
+    height: 8.16%;
+}
+
+#soba25 {
+    width: 20%;
+    height: 100%;
+    border-top: white;
+    border-left: white;
+    border-bottom: white;
+}
+
+#soba26 {
+    width: 22.5%;
+    height: 100%;
+    border-top: white;
+    border-bottom: white;
+}
+
+#soba27 {
+    width: 5%;
+    height: 100%;
+    border-top: white;
+    border-right: white;
+    border-bottom: white;
+}
+
+#soba28 {
+    width: 30%;
+    height: 100%;
+    border-left: white;
+    border-right: white;
+}
+
+#soba29 {
+    width: 7.5%;
+    height: 100%;
+    border-top: white;
+    border-bottom: white;
+    border-left: white;
+}
+
+#soba30 {
+    width: 15%;
+    height: 100%;
+}
+
+#row5 {
+    width: 100%;
+    height: 10.20%;
+}
+
+#soba31 {
+    width: 20%;
+    height: 100%;
+    border-top: white;
+    border-bottom: white;
+    border-left: white;
+}
+
+#soba32 {
+    width: 22.5%;
+    height: 100%;
+    border-top: white;
+}
+
+#soba33 {
+    width: 5%;
+    height: 100%;
+    border-top: white;
+    border-bottom: white;
+}
+
+#soba34 {
+    width: 30%;
+    height: 100%;
+}
+
+#soba35 {
+    width: 5%;
+    height: 100%;
+    border-top: white;
+    border-bottom: white;
+}
+
+#soba36 {
+    width: 12.5%;
+    height: 100%;
+}
+
+#soba37 {
+    width: 5%;
+    height: 100%;
+    border-right: white;
+    border-bottom: white;
+}
+
+#row6 {
+    width: 100%;
+    height: 8.16%;
+}
+
+#soba38 {
+    width: 15%;
+    height: 100%;
+    border-top: white;
+    border-bottom: white;
+    border-left: white;
+}
+
+#soba39 {
+    width: 22.5%;
+    height: 100%;
+    border-bottom: white;
+}
+
+#soba40 {
+    width: 10%;
+    height: 100%;
+    border-top: white;
+    border-bottom: white;
+}
+
+#soba41 {
+    width: 30%;
+    height: 100%;
+}
+
+#soba42 {
+    width: 5%;
+    height: 100%;
+    border-top: white;
+    border-bottom: white;
+}
+
+#soba43 {
+    width: 12.5%;
+    height: 100%;
+}
+
+#soba44 {
+    width: 5%;
+    height: 100%;
+    border-top: white;
+    border-right: white;
+    border-bottom: white;
+}
+
+#row7 {
+    width: 100%;
+    height: 8.16%;
+}
+
+#soba45 {
+    width: 15%;
+    height: 100%;
+    border-top: white;
+    border-bottom: white;
+    border-left: white;
+}
+
+#soba46 {
+    width: 22.5%;
+    height: 100%;
+    border-top: white;
+    border-bottom: white;
+}
+
+#soba47 {
+    width: 10%;
+    height: 100%;
+    border-top: white;
+    border-right: white;
+}
+
+#soba48 {
+    width: 30%;
+    height: 100%;
+    border-left: white;
+    border-right: white;
+}
+
+#soba49 {
+    width: 5%;
+    height: 100%;
+    border-left: white;
+    border-top: white;
+}
+
+#soba50 {
+    width: 12.5%;
+    height: 100%;
+}
+
+#soba51 {
+    width: 5%;
+    height: 100%;
+    border-top: white;
+    border-right: white;
+    border-bottom: white;
+}
+
+#row8 {
+    width: 100%;
+    height: 4.08%;
+}
+
+#soba52 {
+    width: 15%;
+    height: 100%;
+    border-top: white;
+    border-bottom: white;
+    border-left: white;
+}
+
+#soba53 {
+    width: 22.5%;
+    height: 100%;
+    border-top: white;
+}
+
+#soba54 {
+    width: 25%;
+    height: 100%;
+}
+
+#soba55 {
+    width: 32.5%;
+    height: 100%;
+}
+
+#soba56 {
+    width: 5%;
+    height: 100%;
+    border-top: white;
+    border-right: white;
+    border-bottom: white;
+}
+
+#row9 {
+    width: 100%;
+    height: 12.24%;
+}

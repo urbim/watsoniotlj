@@ -1,0 +1,310 @@
+<script src='scripts/spectrum.js'></script>
+<link rel='stylesheet' href='css/spectrum.css' />
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <span class="lang si">LED nadzorna plošča</span><span class="lang en">LED Control Panel</span>
+        <div class="select-header">
+            <span><span class="lang si">Izberi napravo</span><span class="lang en">Pick a device</span>:</span>
+            <select id="selectLight">
+                <option value="null">ID: NAME</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="panel-body">
+        <div id="cp">
+            <div id="cp-left" class="col-md-6">
+                <button class="btn btn-warning btn-on-off" id="btnPrizgi" >ON</button>
+                <button class="btn btn-warning btn-on-off" id="btnUgasni" >OFF</button>
+            </div>
+            <div id="cp-right" class="col-md-6">
+                <input class="cp-cp" name="colorPicker" type='color' id="colorPicker"/><br />
+                <button class="btn btn-primary btn-apply" id="btnSubmit"><span class="lang si">Uporabi barvo</span><span class="lang en">Apply Color</span></button>
+            </div>
+        </div>
+        <div id="lightState" class="col-md-12"></div>
+        <div class="col-md-12 lang si">
+            <p>
+                Za nastavljanje barv LED trakov <b>Phillips Hue</b> najprej izberite željeno napravo v meniju zgoraj desno.
+                Po izbiri naprave se prikaže informacija o stanju traku, v kvadratku pa se prikaže njegova trenutna barva.
+            </p>
+            <p>
+                Za spremijanje barv kliknite na obarvan kvadratek in izberite novo barvo.
+                Barvo spremenite s klikom na gumb <i>'Uporabi barvo'</i>.
+            </p>
+            <p>
+                Izbran LED trak lahko prižgete ali ugasnete s klikom na gumb <i>'ON'</i> ali <i>'OFF'</i>.
+            </p>
+        </div>
+        <div class="col-md-12 lang en">
+            <p>
+                To change colors of <b>Phillips Hue</b> LED strips you have to select your device from the upper right dropdown menu.
+                After you pick a device, information about the choosen device is displayed and the current color of the LED strip
+                is displayed in the coloured square.
+            </p>
+            <p>
+                To change the color, click on the coloured square and pick a new color.
+                After picking the color, click on the button <i>'Apply color'</i>.
+            </p>
+            <p>
+                You can turn the choosen LED strip on and off by clicking the buttons <i>'ON'</i> or <i>'OFF'</i>.
+            </p>
+        </div>
+
+    </div>
+</div>
+<script>
+var url = 'http://iotplatformiicljuljana.mybluemix.net';
+refresh();
+
+var cpSupport = false;
+
+var i = document.createElement("input");
+i.setAttribute("type", "color");
+if  (i.type !== "text") {
+	console.log("PODPIRA");
+	cpSupport = true;
+} else {
+	$("#colorPicker").spectrum({
+		color: "#f00",
+		replacerClassName: "cp-cp"
+	});
+}
+
+
+
+$("#btnPrizgi").click(function() {
+
+    var idObj = {id: $("#selectLight").val()};
+
+    console.log(idObj);
+
+
+    $.get( url + "/lucke/prizgi", idObj ,function( data ) {
+        //alert( "Prizigam!" );
+    });
+
+
+});
+
+$("#btnUgasni").click(function() {
+
+    var idObj = {id: $("#selectLight").val()};
+
+    $.get( url + "/lucke/ugasni", idObj, function( data ) {
+        //alert( "Prizigam!" );
+    }, "json");
+});
+
+$("#btnSubmit").click(function(){
+
+	var color;
+	if (cpSupport) {
+		color = $("#colorPicker").val();
+	} else {
+		var t = $("#colorPicker").spectrum("get");
+		color = t.toHexString();      // "ff0000"
+	}
+
+
+    var hsv = rgbToHsv(hexToRgb(color));
+
+    hsv.id = $("#selectLight").val();
+
+    $.get(url + "/lucke/barva", hsv, function (response) {
+        console.log(response);
+    });
+});
+
+function refresh() {
+    $.get(url + "/lucke/vse", function (response) {
+        console.log(response);
+
+        var select = $("#selectLight");
+        select.html("");
+        $.each(response, function() {
+            select.append($("<option />").val(this.id).text(this.id + ": " + this.name));
+        });
+
+    });
+
+}
+
+
+
+$("#btnRefresh").click(function () {
+    refresh();
+
+});
+
+$("#selectLight").change(function() {
+
+    var idObj = {id: $("#selectLight").val(), req:true};
+    $.get(url + "/lucke/stanje", idObj, function (response) {
+        console.log(response);
+        var s = response.state;
+        var hsv = {
+            h:s.hue,
+            s:s.sat,
+            v:s.bri
+        };
+
+        var color = rgbToHex(HSVtoRGB(hsv))
+        console.log(color);
+
+        //$("#colorPicker").val(color);
+		if (cpSupport) {
+			$("#colorPicker").val(color);
+		} else {
+			$("#colorPicker").spectrum("set", color);
+		}
+
+
+        if (!s.on) {
+            //$("body").css("background-color", "#A0A0A0");
+            $("#lightState").text("Light is OFF");
+        } else {
+            //$("body").css("background-color", "#F0F0F0");
+            $("#lightState").text("Light is ON");
+        }
+
+        setTimeout(function () {
+            $("#lightState").text("");
+        }, 1500);
+
+        //$("#lightState").html( s.on + "<br/>H: " + s.hue + " S: " + s.sat + " B: " + s.bri );
+    });
+});
+
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+
+function rgbToHex(rgb) {
+    var hex = "#";
+    var r = Math.round(rgb.r).toString(16);
+    var g = Math.round(rgb.g).toString(16);
+    var b = Math.round(rgb.b).toString(16);
+
+    if (r.length < 2) r = "0"+r;
+    if (g.length < 2) g = "0"+g;
+    if (b.length < 2) b = "0"+b;
+
+    hex += r + g + b;
+    return hex;
+}
+
+function HSVtoRGB(hsv)
+{
+
+    hsv.v /= 255.0;
+    hsv.s /= 255.0;
+    hsv.h /= 182.125;
+
+    var rgb = {
+        r:0,
+        g:0,
+        b:0
+    };
+    var i;
+    var f, p, q, t;
+
+    if( hsv.s == 0 ) {
+        // achromatic (grey)
+        rgb.r = rgb.g = rgb.b = hsv.v * 255;
+        return rgb;
+    }
+
+    hsv.h /= 60;			// sector 0 to 5
+    i = Math.floor( hsv.h );
+    f = hsv.h - i;			// factorial part of h
+    p = hsv.v * ( 1 - hsv.s );
+    q = hsv.v * ( 1 - hsv.s * f );
+    t = hsv.v * ( 1 - hsv.s * ( 1 - f ) );
+
+    switch( i ) {
+        case 0:
+            rgb.r = hsv.v;
+            rgb.g = t;
+            rgb.b = p;
+            break;
+        case 1:
+            rgb.r = q;
+            rgb.g = hsv.v;
+            rgb.b = p;
+            break;
+        case 2:
+            rgb.r = p;
+            rgb.g = hsv.v;
+            rgb.b = t;
+            break;
+        case 3:
+            rgb.r = p;
+            rgb.g = q;
+            rgb.b = hsv.v;
+            break;
+        case 4:
+            rgb.r = t;
+            rgb.g = p;
+            rgb.b = hsv.v;
+            break;
+        default:		// case 5:
+            rgb.r = hsv.v;
+            rgb.g = p;
+            rgb.b = q;
+            break;
+    }
+    rgb.r *= 255;
+    rgb.g *= 255;
+    rgb.b *= 255;
+    return rgb;
+
+}
+
+
+function rgbToHsv (rgb) {
+
+    var r = rgb.r / 255.0;
+    var g = rgb.g / 255.0;
+    var b = rgb.b / 255.0;
+
+    var cMax = Math.max(r,g,b);
+    var cMin = Math.min(r,g,b);
+
+    var delta = cMax - cMin;
+
+    var v = cMax;
+    var s,h;
+    if (cMax == 0) {
+        s = 0;
+    } else {
+        s = delta/cMax;
+    }
+    if (delta == 0) h = 0;
+    else {
+        if (cMax === r) {
+            h = 60 * (((g-b)/delta) % 6);
+        } else if (cMax === g) {
+            h = 60 * (((b-r)/delta) + 2);
+        } else {
+            h = 60 * (((r-g)/delta) + 4);
+        }
+        if (h < 0) h+= 360;
+    }
+
+    h*= 182,125;
+    h = Math.floor(h);
+    return { hue: h, sat: Math.round(s*255), bri: Math.round(v*255) };
+}
+
+$("#btnBarve").click(function () {
+    var color = $("#colorPicker").val();
+    console.log(rgbToHsv(hexToRgb(color)));
+});
+</script>

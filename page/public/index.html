@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<head>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- Zoom.js -->
+    <link href="css/zoom.css" rel="stylesheet">
+    <script src="scripts/zoom.js"></script>
+
+    <script src="scripts/code.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" onclick="load_page('/pages/domov.html', null)">IBM Watson IoT Demo</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav" id="main-navigation">
+                    <li class="active" id="gumb-domov"><a onclick="load_page('/pages/domov.html')"><span class="lang si">Domov</span><span class="lang en">Home</span></a></li>
+                    <li><a onclick="load_page('/pages/tloris.html')"><span class="lang si">Tloris</span><span class="lang en">Ground plan</span></a></li>
+                    <li><a onclick="load_page('/pages/slika.html')"><span class="lang si">Slika</span><span class="lang en">Image</span></a></li>
+                    <li><a onclick="load_page('/pages/lucke.html')"><span class="lang si">Lučke</span><span class="lang en">Lights</span></a></li>
+                    <li><a onclick="load_page('/pages/smart_kapp.html')">SMART kapp</a></li>
+                    <li><a onclick="load_page('/pages/blockchain.html')">Blockchain</a></li>
+                    <li><a onclick="load_page('/pages/dokumentacija.html')"><span class="lang si">Dokumentacija</span><span class="lang en">Documentation</span></a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Language <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu" id="language-dropdown">
+                            <li><a onclick="set_language('si')">Slovenian <span class="glyphicon glyphicon-ok" aria-hidden="true" data-lang="si"></span></a></li>
+                            <li><a onclick="set_language('en')">English <span class="glyphicon glyphicon-ok" aria-hidden="true" data-lang="en"></span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+
+    <div class="container" id="main-container">
+
+    </div>
+    <!---<img id="img-logo.png" src="images/index/IIClogo.png" alt="iic-logo" />-->
+    <div id="img-logo"></div> <!--- inserted by CSS, fixed height by JS -->
+</body>

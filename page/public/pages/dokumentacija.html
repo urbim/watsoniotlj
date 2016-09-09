@@ -1,0 +1,240 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="lang si">Senzorji</h3><h3 class="lang en">Sensors</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-5">
+            <img class="img-responsive img-thumbnail" src="images/dokumentacija/senzorji.jpg" alt="diagram-senzorji" data-action="zoom" />
+        </div>
+        <div class="col-md-7">
+			<img class="img-responsive img-thumbnail" src="images/dokumentacija/node-solvera.jpg" alt="node-diagram-solvera" data-action="zoom" />
+			<div class="lang si">
+				<p>
+					Za meritve temperature, svetlosti in vlage smo uporabili senzorje Firefly.
+					Senzorji vsake 10 minut pošljejo meritve prek Bluetooth-a.
+					Te meritve poslušata dva RaspberryPi gateway-a, ki prejeto meritev
+					pretvorita v MQtt in pošljeta v Bluemix Internet of Things oblak.
+					Oblak meritve shrani v Cloudant NoSQL bazo.
+				</p>
+				<p>
+					Poleg Firefly senzorjev smo uporabili še Solvera Lynx senzorje,
+					ki svoje meritve pošljejo prek LoRa omrežja v Solverino bazo,
+					od tam pa jih prepošljejo v naš oblak prek POST requesta.
+					Dva senzorja merita temperaturo, eden pa odpiranje in zapiranje
+					vrat v Datacentru.
+					Oblak tudi te meritve shrani v bazo.
+				</p>
+			</div>
+			<div class="lang en">
+				<p>
+					We used Firefly sensors for temperature, luminosity and humidity measurements.
+					Every 10 minutes the sensors send the measurements via Bluetooth.
+					There are two Rapberry Pi gateways which are listening for those measurements,
+					transform them into MQtt and send them to Bluemix Internet of Things cloud.
+					The cloud saves those measurements in a Cloudant NoSQL database.
+				</p>
+				<p>
+					In addition ot Firefly sensors, we also used the Solvera Lynx sensors,
+					which send their measurments via LoRa network into Solvera database. From there
+					they are sent to our cloud via a POST request.
+					We have three Solvera Lynx snesors. Two of them measure temeprature,
+					while the other monitors whether the doors on one of the racks in the Datacenter
+					are open or closed. Those measurements are also saved in Cloudant NoSQL database.
+				</p>
+			</div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="lang si">RPi kamera</h3><h3 class="lang en">RPi camera</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-5">
+            <img class="img-responsive img-thumbnail" src="images/dokumentacija/rpi_camera.jpg" alt="diagram-kamera" data-action="zoom" />
+        </div>
+        <div class="col-md-7">
+            <img class="img-responsive img-thumbnail" src="images/dokumentacija/node-camera.jpg" alt="node-diagram-camera" data-action="zoom" />
+			<div class="lang si">
+				<p>
+					Bluemix Internet of Things oblak pošlje zahtevo za slikanje RPi,
+					če zazna, da se senzor na IoT tabli premika, ali pa če dobi
+					zahtevo iz spletne aplikacije (gumb <b>Slikaj!</b> na zavihku <i>Slika</i>).
+				</p>
+				<p>
+					Ko RPi dobi zahtevo za slikanje, proži kamero in dobljeno sliko
+					shrani v Cloudant NoSQL bazo. Nato IoT oblaku pošlje ID slike,
+					s katerim jo ta lahko najde v bazi. Slika se shrani direktno
+					v bazo zato, ker prek MQtt ne moremo poslati tako velikega
+					sporočila, da bi vanj lahko spravili sliko.
+				</p>
+				<p>
+					Ko oblak dobi ID slike, ga pošlje na Blockchain servis, kjer
+					se slikanje zabeleži. Nato oblak pošlje sliko na IBM Watson Visual Recognition
+					servis, ki prepoznava obraze in naučene osebe. Podatki iz servisa
+					se shranijo v bazo.
+				</p>
+				<p>
+					Spletna aplikacija na zavihku <i>Slikaj</i> se samodejno osveži,
+					ko se na strežniku pojavi nova slika in podatki iz VR servisa.
+				</p>
+			</div>
+			<div class="lang en">
+				<p>
+					Bluemix Internet of Things cloud sends a camera request to RPi
+					if the sensor on the IoT board is moving (shaking) or if it gets a manual
+					request from the web application (button <b>Take a picture!</b> on the <i>Image</i> tab).
+				</p>
+				<p>
+					When the RPi gets the camera request, it activates the camera, captures a picture
+					and saves it into the Cloudant NoSQL database. Then it sends the ID of the image to the
+					IoT cloud so that the cloud can find it in the database. The picture is saved directly
+                    to the Cloudant database because we can't send a message that big through MQtt.
+				</p>
+				<p>
+					When the cloud receives the picture ID, it logs the picture on blockchain
+					using the Blockchain service. The cloud then sends the picture to the IBM Watson Visual Recognition service,
+					which can recognize faces and can learn to recognize specific persons. Results from
+					Viusal recognition are saved in the database.
+				</p>
+				<p>
+					The web application on the <i>Picture</i> tab refreshes automatically,
+					when new picture and IBM Watson Visual Recognition data is available.
+				</p>
+			</div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>Phillips Hue</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-5">
+            <img class="img-responsive img-thumbnail" src="images/dokumentacija/phillips_hue.jpg" alt="diagram-phillips-hue" data-action="zoom" />
+        </div>
+        <div class="col-md-7">
+			<img class="img-responsive img-thumbnail" src="images/dokumentacija/node-philipshue.jpg" alt="node-diagram-philipshue" data-action="zoom" />
+			<div class="lang si">
+				<p>
+					Phillips Hue LED trakova sta postavljena na IoT tablo in v
+					Datacenter. Prek Bluetooth-a ju kontrolira Phillips Hue bridge,
+					ki je povezan v isto omrežje kot RaspberryPi. RPi bridge-u pošilja
+					komande, ki mu jih pošlje IoT oblak prek MQtt.
+				</p>
+				<p>
+					IoT oblak pošilja komande za LED trak na IoT tabli glede na
+					stanje več virov. Vsakih 20 minut prek Weather API-ja pogleda trenutno
+					vremensko napoved in glede na to prilagodi barvo traku:
+					<ul>
+						<li>Sončno: rdeča</li>
+						<li>Jasno: oranžna</li>
+						<li>Oblačno: cyan</li>
+						<li>Deževno: modra</li>
+						<li>Nevihta: vijolično</li>
+					</ul>
+					Če spreminjamo potenciometra na ARM mbed-u, ki je na tabli, ta prek
+					MQtt-ja pošlje podatke v oblak, ki nato spremeni barvo LED traku.
+					Oblak prilagodi tu barvo traku tudi glede na zadnji prepoznan
+					tekst iz SMART kapp table (več v razdelku <b>SMART kapp</b>), barvo pa
+					lahko spremenimo tudi ročno prek spletne aplikacije v zavihku <i>Lučke</i>
+				</p>
+				<p>
+					LED trak v Datacentru oblak kontrolira glede na podatke
+					Solverinega senzorja, ki zaznava odpiranje in zapiranje vrat.
+				</p>
+			</div>
+			<div class="lang en">
+				<p>
+					We have two Philips Hue LED stripes. One is placed around the IoT board and the
+					other is placed in the Datacenter. They are controlled via Bluetooth by the
+					Philips Hue Bridge, which is connected to the same network as a RaspberryPi.
+					The cloud sends commands to the RPi (via MQtt), which then sends them to the Philips Hue Bridge.
+				</p>
+				<p>
+					IoT cloud sends commands for the LED stripe on the IoT board based on different actions/triggers.
+					Every 20 minutes we check the weather via Weather API and set LED stipe color accordingly:
+					<ul>
+						<li>Sunny: red</li>
+						<li>Clear: orange</li>
+						<li>Cloudy: cyan</li>
+						<li>Rainy: blue</li>
+						<li>Storm: purple</li>
+					</ul>
+					ARM mbed, which is also located on the IoT board, sends the state of potentiometers to the IoT cloud (via MQtt) and
+					sets the LED stripe color based on the potentiometer values.
+					LED stripe color can also be set by writing the desired color on the SMART kapp board
+					(more details in the <b>SMART kapp</b> section).
+					Lastly, we can manually set the color of any desired LED light by using the web application - tab <i>Lights</i>.
+				</p>
+				<p>
+					LED stripe in the Datacenter is controlled by the cloud, based on the readings of
+					a Solvera Lynx sensor, which reads whether Datacenter rack gates are opened or closed.
+				</p>
+			</div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>SMART kapp</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-5">
+            <img class="img-responsive img-thumbnail" src="images/dokumentacija/smart_kapp.jpg" alt="diagram-SMART-kapp" data-action="zoom" />
+        </div>
+        <div class="col-md-7">
+            <img class="img-responsive img-thumbnail" src="images/dokumentacija/node-smartkapp.jpg" alt="node-diagram-smartkapp" data-action="zoom" />
+            <div class="lang si">
+				<p>
+					Na SMART kapp tablo se povežemo z istoimensko aplikacijo za
+					pametne telefone. Nato na tablo napišemo tekst in v aplikaciji
+					izberemo možnost <b>'Share as Image'</b> in nato izberemo aplikacijo,
+					ki jo uporabljamo za pošiljanje e-mail-ov. Sliko pošljemo na e-mail naslov.
+				</p>
+				<p>
+					Bluemix-ov strežnik vsakih 10 sekund prek IMAP protokola pogleda,
+					ali je na e-mail serverju nova pošta. Če je, jo odpre in prvo priponko
+					pošlje na IBM Watson Visual Recognition servis, ki prepozna tekst.
+				</p>
+				<p>
+					Prepoznan tekst se izpiše v spletni aplikaciji pod zavihkom <i>SMART kapp</i>.
+					Če je v prepoznanem tekstu barva, se barva LED traku na IoT tabli
+					nastavi na prepoznano barvo. Če je v prepoznanem tekstu črka 'p'
+					kot samostojna beseda, strežnik sproži kamero na IoT tabli.
+				</p>
+			</div>
+			<div class="lang en">
+				<p>
+					You can connect to the SMART kapp board by using the SMART-kapp application
+					for smartphones. You can write something on the board. In the application
+					choose the option <b>'Share as Image'</b> and then choose an application
+					for sending e-mails. Send the picture to <i>iotlj.img@gmail.com</i>.
+				</p>
+				<p>
+					Bluemix server (cloud) checks the email inbox if there is new email via the IMAP protocol.
+					If there is, it opens it up and sends the attachment to the IBM Watson Visual Recognition service,
+					which recognizes handwritten text.
+				</p>
+				<p>
+					Recognized text is shown in the web application under the <i>SMART kapp</i> tab.
+					If there is a color in the recognized text, the LED stripe on the IoT board will
+					change to that color. If there is a letter 'P' in the recognized text (as a standalone word),
+					it will trigger the camera on the IoT board.
+				</p>
+			</div>
+        </div>
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>Bluemix Dashboard</h3>
+    </div>
+    <div class="panel-body">
+        <img class="img-responsive img-thumbnail" src="images/dokumentacija/dashboard.jpg" alt="node-diagram-smartkapp" data-action="zoom" />
+    </div>
+</div>
